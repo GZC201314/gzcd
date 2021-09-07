@@ -49,7 +49,7 @@ describe('test button component',()=>{
         const element = wrapper.getByText('Nice') as HTMLButtonElement
         expect(element).toBeInTheDocument()
         expect(element.tagName).toEqual('BUTTON')
-        expect(element.disabled).toBeFalsy()
+        expect(element.disabled).toBeTruthy()
     });
 })
 

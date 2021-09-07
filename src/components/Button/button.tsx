@@ -46,6 +46,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     }else {
         return (
             <button className={classes}
+                    disabled={disabled}
                     {...restProps}
             >{children}</button>
         )
