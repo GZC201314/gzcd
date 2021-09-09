@@ -1,31 +1,47 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState,ButtonHTMLAttributes,AnchorHTMLAttributes,FC,ReactNode} from 'react'
 import classNames from "classnames";
 
-export enum ButtonSize {
-    Large = 'lg',
-    Small = 'sm'
-}
-
-export enum ButtonType {
-    Primary = 'primary',
-    Default = 'default',
-    Danger = 'danger',
-    Link = 'link'
-}
+export type ButtonSize = 'lg'|'sm'
+export type ButtonType ='primary'|'default'|'danger'|'link'
 
 interface BaseButtonProps {
+    /**
+     * 设置Button的样式类
+     */
     className?: string,
+    /**
+     * 设置Button禁用
+     */
     disabled?: boolean,
+    /**
+     * 设置Button的大小
+     */
     size?: ButtonSize,
+    /**
+     * 设置Button的类型
+     */
     btnType?: ButtonType,
+    /**
+     * 设置Link Button链接
+     */
     href?: string,
-    children: React.ReactNode
+    /**
+     * Button下面的子节点
+     */
+    children: ReactNode
 }
 
-type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLElement>
-type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLElement>
+type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>
+type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
-const Button: React.FC<ButtonProps> = (props) => {
+/**
+ * 这是我的第一个Button组件
+ * ## 引用方法
+ * ~~~js
+ * import {Button} from 'gzcd'
+ * ~~~
+ */
+export const Button: FC<ButtonProps> = (props) => {
 
     /**state  state部分**/
     const {btnType,className, disabled, size, href, children,...restProps} = props
@@ -33,10 +49,10 @@ const Button: React.FC<ButtonProps> = (props) => {
     const classes = classNames('btn',className, {
         [`btn-${btnType}`]: btnType,
         [`btn-${size}`]: size,
-        'disabled': (btnType === ButtonType.Link) && disabled,
+        'disabled': (btnType === 'link') && disabled,
     })
     //区分链接按钮和普通按钮
-    if (btnType === ButtonType.Link && href) {
+    if (btnType === 'link' && href) {
         return (
             <a className={classes}
                href={href}
@@ -61,6 +77,6 @@ const Button: React.FC<ButtonProps> = (props) => {
 }
 Button.defaultProps ={
     disabled:false,
-    btnType:ButtonType.Default
+    btnType:'default'
 }
-export default Button
+export default Button;

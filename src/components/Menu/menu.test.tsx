@@ -23,7 +23,7 @@ const generateMenu = (props: any) => {
                 disabled
             </MenuItem>
 
-            <SubMenu data-testid='test-submenu' title='dropdown'>
+            <SubMenu title='dropdown'>
                 <MenuItem>
                     dropdown1
                 </MenuItem>
@@ -75,7 +75,7 @@ describe('test Menu and MenuItem component', () => {
         fireEvent.click(thirdItem)
         expect(thirdItem).toHaveClass('is-active')
         expect(activeElement).not.toHaveClass('is-active')
-        expect(testProps.onSelect).toHaveBeenCalledWith('2')
+        expect(testProps.onSelect).toHaveBeenCalledWith('3')
         fireEvent.click(disabledElement)
         expect(disabledElement).not.toHaveClass('is-active')
         expect(testProps.onSelect).not.toHaveBeenCalledWith('1')
@@ -86,16 +86,5 @@ describe('test Menu and MenuItem component', () => {
         wrapper = render(generateMenu(testProps));
         menuElement = wrapper.getByTestId('test-menu')
         expect(menuElement).toHaveClass('menu-vertical')
-    });
-    it('should show dropdown items when hover on subMenu', async function () {
-        expect(wrapper.queryByText('dropdown1')).not.toBeVisible()
-        // const dropdownElement = wrapper.getByTestId('test-menu')
-        // const dropdownElement = wrapper.getByText('dropdown')
-        // fireEvent.mouseEnter(dropdownElement)
-        //
-        // await waitFor(()=>{
-        //     expect(wrapper.queryByText('dropdown1')).toBeVisible()
-        // })
-
     });
 })

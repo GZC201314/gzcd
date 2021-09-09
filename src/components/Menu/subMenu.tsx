@@ -2,6 +2,8 @@ import React, {useContext, FunctionComponentElement, useState} from 'react'
 import classNames from "classnames";
 import Menu, {MenuContext} from "./menu";
 import {MenuItemProps} from "./menuItem";
+import Icon from "../Icon/icon";
+import Transition from "../Transition/transition";
 
 export interface SubMenuProps {
     index?: string,
@@ -15,10 +17,12 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
     const context = useContext(MenuContext)
     const openedSubMenus = context.defaultOpenSubMenus as Array<string>
     const {index, title, className, children} = props;
-    const isOpened =(index && context.mode === 'vertical')?openedSubMenus.includes(index):false
+    const isOpened = (index && context.mode === 'vertical') ? openedSubMenus.includes(index) : false
     const [menuOpen, setMenuOpen] = useState(isOpened)
     const classes = classNames('menu-item submenu-item', className, {
-        'is-active': context.index === index
+        'is-active': context.index === index,
+        'is-opened': menuOpen,
+        'is-vertical': context.mode === 'vertical'
     })
 
     /**effect  effect部分**/
@@ -35,17 +39,24 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
         const childrenComponent = React.Children.map(children, (children, i) => {
             const childrenElement = children as FunctionComponentElement<MenuItemProps>
             if (childrenElement.type.displayName === 'MenuItem') {
-                return React.cloneElement(childrenElement,{
-                    index:`${index}-${i}`
+                return React.cloneElement(childrenElement, {
+                    index: `${index}-${i}`
                 })
             } else {
                 console.error("Error:SubMenu has a child which is not a MenuItem component")
             }
         })
         return (
-            <ul className={sunMenuClasses}>
-                {childrenComponent}
-            </ul>
+            <Transition
+                in={menuOpen}
+                timeout={300}
+                animation='zoom-in-top'
+            >
+                <ul className={sunMenuClasses}>
+                    {childrenComponent}
+                </ul>
+            </Transition>
+
         );
     }
     let timer: any
@@ -75,6 +86,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
         <li key={index} className={classes} {...hoverEvents}>
             <div className='submenu-title' {...clickEvents}>
                 {title}
+                <Icon icon='angle-down' className='arrow-icon'/>
             </div>
             {renderChildren()}
         </li>
