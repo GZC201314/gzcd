@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /*编译输出路径*/
+    "outDir": "build",
+
+    "module": "ESNext",
+    /*需要编译成的目标类型*/
+    "target": "ES5",
+    /*为每个模块生成一个xxx.d.ts文件*/
+    "declaration": true,
+    "jsx": "react",
+    /*设置寻找包的查找模式*/
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
+  },
+  /*包含需要编译的源文件*/
+  "include": [
+    "src"
+  ],
+  /*排除不需要编译的源文件*/
+  "exclude": [
+    "src/**/*.test.tsx",
+    "src/**/*.stories.tsx"
+  ]
+}

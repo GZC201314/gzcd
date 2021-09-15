@@ -1,7 +1,7 @@
-import React, {FC} from "react";
-import {UploadFile} from "./upload";
-import Icon from "../Icon/icon";
-import Progress from "../Progress/progress";
+import React, {FC} from 'react'
+import {UploadFile} from './upload'
+import Icon from '../Icon/icon'
+import Progress from '../Progress/progress'
 
 interface UploadListProps {
     fileList: UploadFile[];
@@ -9,15 +9,16 @@ interface UploadListProps {
 }
 
 export const UploadList: FC<UploadListProps> = (props) => {
-    const {fileList, onRemove} = props
+    const {
+        fileList,
+        onRemove,
+    } = props
+
     return (
-        <ul className={'gzcd-upload-list'}>
+        <ul className="gzcd-upload-list">
             {fileList.map(item => {
                 return (
-                    <li
-                        className={'gzcd-upload-list-item'}
-                        key={item.uid}
-                    >
+                    <li className="gzcd-upload-list-item" key={item.uid}>
             <span className={`file-name file-name-${item.status}`}>
               <Icon icon="file-alt" theme="secondary"/>
                 {item.name}
@@ -42,5 +43,7 @@ export const UploadList: FC<UploadListProps> = (props) => {
             })}
         </ul>
     )
+
 }
-export default UploadList
+
+export default UploadList;
